@@ -5,14 +5,22 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Notifications
@@ -37,19 +45,24 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.rupeek.agentapp.presentation.customDrawer.component.CustomDrawer
 import com.rupeek.agentapp.presentation.customDrawer.domain.models.CustomDrawerState
 import com.rupeek.agentapp.presentation.customDrawer.domain.models.NavigationItem
 import com.rupeek.agentapp.presentation.customDrawer.domain.models.isOpened
 import com.rupeek.agentapp.presentation.customDrawer.domain.models.opposite
 import com.rupeek.agentapp.presentation.screens.HomeScreen
+import com.rupeek.agentapp.ui.theme.primaryLight
 import com.rupeek.agentapp.utils.coloredShadow
 import kotlin.math.roundToInt
 
 @Composable
 fun MainScreen() {
+
     var drawerState by remember { mutableStateOf(CustomDrawerState.Closed) }
+
     var selectedNavigationItem by remember { mutableStateOf(NavigationItem.Home) }
 
     val configuration = LocalConfiguration.current
@@ -123,16 +136,51 @@ fun MainContent(
 
     Scaffold(
         modifier = modifier
-            .clickable(enabled = drawerState == CustomDrawerState.Closed){
+            .clickable(enabled = drawerState == CustomDrawerState.Closed) {
                 onDrawerClick(CustomDrawerState.Closed)
             },
         topBar = {
             TopAppBar(
-                title = { Text(
-                    text = "Rupeek",
-                    fontWeight = FontWeight.Bold,
-                    fontStyle = FontStyle.Italic
-                ) },
+                title = {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(0.dp)
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(16.dp),
+                                imageVector = Icons.Default.LocationOn,
+                                contentDescription = "Location",
+                                tint = primaryLight
+                            )
+                            Spacer(Modifier.width(2.dp))
+                            Text(
+                                text = "Rupeek",
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Bold,
+                            )
+                            Spacer(Modifier.width(2.dp))
+                            Icon(
+                                modifier = Modifier.size(16.dp),
+                                imageVector = Icons.Default.KeyboardArrowDown,
+                                contentDescription = "arrow down",
+                            )
+                        }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                modifier = Modifier.padding(0.dp).weight(1f),
+                                text = "HSR Layout, Sector 2, Bangalore",
+                                maxLines = 1,
+                                fontSize = 12.sp
+                            )
+                        }
+
+                    }
+
+                },
                 navigationIcon = {
                     IconButton(
                         onClick = {
@@ -158,7 +206,7 @@ fun MainContent(
                     }
                     IconButton(
                         onClick = {
-                           //todo show a more option dialog
+                            //todo show a more option dialog
                         }
                     ) {
                         Icon(
@@ -172,10 +220,17 @@ fun MainContent(
     ) { paddingValues ->
 
         HomeScreen(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(paddingValues)
         )
 
     }
 
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MainScreenPreview() {
+    MainScreen()
 }

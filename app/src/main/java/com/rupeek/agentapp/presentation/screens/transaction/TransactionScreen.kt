@@ -46,22 +46,22 @@ fun TransactionScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ){
-        LazyRow(
-            modifier = Modifier.fillMaxWidth()
-                .padding(horizontal = 8.dp),
-            state = rememberLazyListState(),
-            contentPadding = PaddingValues(4.dp)
-        ) {
-            items(statusItem.size) { index ->
-                statusItem[index].let { statusItem ->
-                    StatusCard(
-                        modifier = Modifier.width(150.dp)
-                            .padding(horizontal = 8.dp),
-                        statusItem = statusItem
-                    )
-                }
-            }
-        }
+//        LazyRow(
+//            modifier = Modifier.fillMaxWidth()
+//                .padding(horizontal = 8.dp),
+//            state = rememberLazyListState(),
+//            contentPadding = PaddingValues(4.dp)
+//        ) {
+//            items(statusItem.size) { index ->
+//                statusItem[index].let { statusItem ->
+//                    StatusCard(
+//                        modifier = Modifier.width(150.dp)
+//                            .padding(horizontal = 8.dp),
+//                        statusItem = statusItem
+//                    )
+//                }
+//            }
+//        }
 
         FilterChipGroupWithList(
             modifier = Modifier.fillMaxSize()

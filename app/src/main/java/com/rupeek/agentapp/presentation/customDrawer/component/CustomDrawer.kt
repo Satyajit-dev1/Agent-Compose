@@ -1,5 +1,6 @@
 package com.rupeek.agentapp.presentation.customDrawer.component
 
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,10 +9,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -20,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,6 +28,7 @@ import com.rupeek.agentapp.presentation.customDrawer.domain.models.NavigationIte
 fun CustomDrawer(
     modifier: Modifier = Modifier,
     selectedNavigationItem: NavigationItem,
+    maxWidth: Float = 0.6f,
     onNavigationItemClick: (NavigationItem) -> Unit,
     onCloseClick: () -> Unit
 ) {
@@ -37,7 +36,7 @@ fun CustomDrawer(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .fillMaxWidth(fraction = 0.6f)
+            .fillMaxWidth(fraction = maxWidth)
             .padding(horizontal = 12.dp)
             .testTag("drawer"),
         horizontalAlignment = Alignment.Start
@@ -64,17 +63,18 @@ fun CustomDrawer(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                modifier = Modifier
-                    .size(100.dp),
-                imageVector = Icons.Rounded.AccountCircle,
-                contentDescription = "account"
+            InitialAvatar(
+                modifier = Modifier.padding(end = 4.dp),
+                size = 70.dp,
+                name = "Satyajit Biswal",
             )
             Column(
                 modifier = Modifier.padding(4.dp),
             ) {
                 Text(
+                    modifier = Modifier.basicMarquee(),
                     text = "Satyajit Biswal",
+                    maxLines = 2,
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -87,50 +87,50 @@ fun CustomDrawer(
             }
         }
 
-        Spacer(Modifier.height(12.dp))
+//        Spacer(Modifier.height(12.dp))
+//
+//        Row(
+//            modifier = Modifier.padding(horizontal = 8.dp),
+//            verticalAlignment = Alignment.CenterVertically,
+//        ) {
+//            Column(
+//                modifier = Modifier.weight(1f)
+//            ) {
+//                Text(
+//                    text = "Today's Transaction",
+//                    style = MaterialTheme.typography.titleSmall,
+//                    color = MaterialTheme.colorScheme.onSurface,
+//                    fontWeight = FontWeight.Bold
+//                )
+//                Spacer(Modifier.height(4.dp))
+//                Text(
+//                    text = "12",
+//                    style = MaterialTheme.typography.titleLarge,
+//                    color = MaterialTheme.colorScheme.onSurface,
+//                    fontWeight = FontWeight.Bold
+//                )
+//            }
+//
+//            Column(
+//                modifier = Modifier.weight(1f)
+//            ) {
+//                Text(
+//                    text = "Completion Rate",
+//                    style = MaterialTheme.typography.titleSmall,
+//                    color = MaterialTheme.colorScheme.onSurface,
+//                    fontWeight = FontWeight.Bold
+//                )
+//                Spacer(Modifier.height(4.dp))
+//                Text(
+//                    text = "96%",
+//                    style = MaterialTheme.typography.titleLarge,
+//                    color = MaterialTheme.colorScheme.onSurface,
+//                    fontWeight = FontWeight.Bold
+//                )
+//            }
+//        }
 
-        Row(
-            modifier = Modifier.padding(horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = "Today's Transaction",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text = "12",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = "Completion Rate",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text = "96%",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-
-        Spacer(Modifier.height(40.dp))
+        Spacer(Modifier.height(36.dp))
 
         NavigationItem.entries.toTypedArray().take(4).forEach { navigationItem ->
             NavigationItemView(
@@ -183,6 +183,7 @@ fun CustomDrawer(
 @Composable
 private fun CustomDrawerpreview() {
     CustomDrawer(
+        maxWidth = 1f,
         selectedNavigationItem = NavigationItem.VerifyAsset,
         onNavigationItemClick = {},
         onCloseClick = {}
